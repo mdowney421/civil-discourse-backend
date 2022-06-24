@@ -20,6 +20,8 @@ app.use(express.json())
 
 
 // RESTful ROUTES
+
+// create new user
 app.post('/users', async(req, res) => {
     try {
         const {username, password} = req.body
@@ -30,6 +32,7 @@ app.post('/users', async(req, res) => {
     }
 })
 
+// get all users
 app.get('/users', async(req, res) => {
     try {
         const allUsers = await pool.query('SELECT * FROM useraccounts')
@@ -39,16 +42,18 @@ app.get('/users', async(req, res) => {
     }
 })
 
+// get specific user by username
 app.get('/users/:id', async(req, res) => {
     try {
         const {id} = req.params
-        const user = await pool.query('SELECT * FROM useraccounts WHERE user_id = $1', [id])
+        const user = await pool.query('SELECT * FROM useraccounts WHERE username = $1', [id])
         res.json(user.rows)
     } catch (error) {
         console.error(error.message)
     }
 })
 
+// edit specific user
 app.put('/users/:id', async (req, res) => {
     try {
         const {id} = req.params
@@ -60,6 +65,7 @@ app.put('/users/:id', async (req, res) => {
     }
 })
 
+// delete a user
 app.delete('/users/:id', async (req, res) => {
     try {
         const {id} = req.params
@@ -69,6 +75,7 @@ app.delete('/users/:id', async (req, res) => {
         console.error(error.message)
     }
 })
+
 
 // API ROUTES
 app.get('/api/top_headlines', (req, res) => {
