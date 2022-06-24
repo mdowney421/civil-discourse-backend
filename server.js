@@ -19,7 +19,7 @@ app.use(cors())
 app.use(express.json())
 
 
-// RESTful ROUTES
+// RESTful ROUTES FOR USER ACCOUNTS
 
 // create new user
 app.post('/users', async(req, res) => {
@@ -53,12 +53,12 @@ app.get('/users/:id', async(req, res) => {
     }
 })
 
-// edit specific user
+// edit specific user by username
 app.put('/users/:id', async (req, res) => {
     try {
         const {id} = req.params
         const {username, password} = req.body
-        const updatedUser = await pool.query('UPDATE useraccounts SET username = $1, password = $2 WHERE user_id = $3', [username, password, id])
+        const updatedUser = await pool.query('UPDATE useraccounts SET username = $1, password = $2 WHERE username = $3', [username, password, id])
         res.json('Username was updated')
     } catch (error) {
         console.error(error.message)
@@ -71,6 +71,64 @@ app.delete('/users/:id', async (req, res) => {
         const {id} = req.params
         const deletedUser = await pool.query('DELETE FROM useraccounts WHERE user_id = $1', [id])
         res.json('User was deleted')
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
+
+// RESTful ROUTES FOR ARTICLES
+
+// create new article
+app.post('/articles', async(req, res) => {
+    try {
+        const {article_name} = req.body
+        const newArticle = await pool.query('INSERT INTO articles (article_title) VALUES($1) RETURNING *', [article_name])
+        res.json(newArticle.rows[0])
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
+// get all articles
+app.get('/articles', async(req, res) => {
+    try {
+        const allArticles = await pool.query('SELECT * FROM articles')
+        res.json(allArticles.rows)
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
+// get specific article by title
+app.get('/articles/:id', async(req, res) => {
+    try {
+        const {id} = req.params
+        const article = await pool.query('SELECT * FROM articles WHERE article_title = $1', [id])
+        res.json(article.rows)
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
+// edit specific article by article title
+app.put('/articles/:id', async (req, res) => {
+    try {
+        const {id} = req.params
+        const {article_title, likes, dislikes, comments} = req.body
+        const updatedArticle = await pool.query('UPDATE articles SET article_title = $1, likes = $2, dislikes = $3, comments = $4 WHERE article_title = $5', [article_title, likes, dislikes, comments, id])
+        res.json('Article was updated')
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
+// delete a user
+app.delete('/articles/:id', async (req, res) => {
+    try {
+        const {id} = req.params
+        const deletedArticle = await pool.query('DELETE FROM articles WHERE article_title = $1', [id])
+        res.json('Article was deleted')
     } catch (error) {
         console.error(error.message)
     }
