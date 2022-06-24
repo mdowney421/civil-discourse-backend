@@ -3,6 +3,7 @@ const express = require('express')
 const Sequelize = require('sequelize')
 const cors = require('cors')
 const request = require('request')
+const NewsAPI = require('newsapi')
 const pool = require('./db')
 require('dotenv').config()
 const app = express()
@@ -11,7 +12,7 @@ const app = express()
 // ENV VARIABLES
 const PORT = process.env.PORT || 3003
 const API_KEY = process.env.API_KEY
-
+const newsapi = new NewsAPI(process.env.API_KEY)
 
 // MIDDLEWARE
 app.use(cors())
@@ -71,9 +72,15 @@ app.delete('/users/:id', async (req, res) => {
 
 // API ROUTES
 app.get('/api/top_headlines', (req, res) => {
-    request(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`, (error, body) => {
-        res.json(body)
+    newsapi.v2.topHeadlines({
+        language: 'en',
+        country: 'us'
+    }).then(response => {
+        res.json(response)
     })
+    // request(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`, (error, body) => {
+    //     res.json(body)
+    // })
 })
 
 
