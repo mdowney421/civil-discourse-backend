@@ -82,8 +82,8 @@ app.delete('/users/:id', async (req, res) => {
 // create new article
 app.post('/articles', async(req, res) => {
     try {
-        const {article_name} = req.body
-        const newArticle = await pool.query('INSERT INTO articles (article_title) VALUES($1) RETURNING *', [article_name])
+        const {article_title, date, likes, dislikes, comments} = req.body
+        const newArticle = await pool.query('INSERT INTO articles (article_title, date, likes, dislikes, comments) VALUES($1, $2, $3, $4, $5) RETURNING *', [article_title, date, likes, dislikes, comments])
         res.json(newArticle.rows[0])
     } catch (error) {
         console.error(error.message)
@@ -104,7 +104,7 @@ app.get('/articles', async(req, res) => {
 app.get('/articles/:id', async(req, res) => {
     try {
         const {id} = req.params
-        const article = await pool.query('SELECT * FROM articles WHERE article_title = $1', [id])
+        const article = await pool.query('SELECT * FROM articles WHERE date = $1', [id])
         res.json(article.rows)
     } catch (error) {
         console.error(error.message)
@@ -115,8 +115,8 @@ app.get('/articles/:id', async(req, res) => {
 app.put('/articles/:id', async (req, res) => {
     try {
         const {id} = req.params
-        const {article_title, likes, dislikes, comments} = req.body
-        const updatedArticle = await pool.query('UPDATE articles SET article_title = $1, likes = $2, dislikes = $3, comments = $4 WHERE article_title = $5', [article_title, likes, dislikes, comments, id])
+        const {article_title, date, likes, dislikes, comments} = req.body
+        const updatedArticle = await pool.query('UPDATE articles SET article_title = $1, date = $2, likes = $3, dislikes = $4, comments = $5 WHERE date = $6', [article_title, date, likes, dislikes, comments, id])
         res.json('Article was updated')
     } catch (error) {
         console.error(error.message)
@@ -127,7 +127,7 @@ app.put('/articles/:id', async (req, res) => {
 app.delete('/articles/:id', async (req, res) => {
     try {
         const {id} = req.params
-        const deletedArticle = await pool.query('DELETE FROM articles WHERE article_title = $1', [id])
+        const deletedArticle = await pool.query('DELETE FROM articles WHERE date = $1', [id])
         res.json('Article was deleted')
     } catch (error) {
         console.error(error.message)

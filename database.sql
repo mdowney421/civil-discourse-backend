@@ -8,7 +8,8 @@ CREATE TABLE useraccounts (
 
 CREATE TABLE articles (
     article_id SERIAL PRIMARY KEY,
-    article_title VARCHAR(255) NOT NULL UNIQUE,
+    article_title VARCHAR(255),
+    date TEXT UNIQUE,
     likes INTEGER,
     dislikes INTEGER,
     comments TEXT[]
