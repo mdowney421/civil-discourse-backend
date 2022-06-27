@@ -82,8 +82,8 @@ app.delete('/users/:id', async (req, res) => {
 // create new article
 app.post('/articles', async(req, res) => {
     try {
-        const {article_title, date, likes, dislikes, comments} = req.body
-        const newArticle = await pool.query('INSERT INTO articles (article_title, date, likes, dislikes, comments) VALUES($1, $2, $3, $4, $5) RETURNING *', [article_title, date, likes, dislikes, comments])
+        const {title, description, image, url, date, likes, dislikes, comments} = req.body
+        const newArticle = await pool.query('INSERT INTO articles (title, description, image, url, date, likes, dislikes, comments) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [title, description, image, url, date, likes, dislikes, comments])
         res.json(newArticle.rows[0])
     } catch (error) {
         console.error(error.message)

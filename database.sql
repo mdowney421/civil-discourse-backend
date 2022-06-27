@@ -8,7 +8,10 @@ CREATE TABLE useraccounts (
 
 CREATE TABLE articles (
     article_id SERIAL PRIMARY KEY,
-    article_title VARCHAR(255),
+    title VARCHAR(255),
+    description VARCHAR(255),
+    image VARCHAR(255),
+    url VARCHAR(255),
     date TEXT UNIQUE,
     likes INTEGER,
     dislikes INTEGER,
