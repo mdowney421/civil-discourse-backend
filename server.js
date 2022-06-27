@@ -116,7 +116,7 @@ app.put('/articles/:id', async (req, res) => {
     try {
         const {id} = req.params
         const {title, description, image, url, date, likes, dislikes, comments} = req.body
-        const updatedArticle = await pool.query('UPDATE articles SET article = $1, description = $2, image = $3, url = $4, date = $5, likes = $6, dislikes = $7, comments = $8 WHERE date = $9', [title, description, image, url, date, likes, dislikes, comments, id])
+        const updatedArticle = await pool.query('UPDATE articles SET title = $1, description = $2, image = $3, url = $4, date = $5, likes = $6, dislikes = $7, comments = $8 WHERE date = $9', [title, description, image, url, date, likes, dislikes, comments, id])
         res.json('Article was updated')
     } catch (error) {
         console.error(error.message)
