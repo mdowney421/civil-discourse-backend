@@ -93,7 +93,7 @@ app.post('/articles', async(req, res) => {
 // get all articles
 app.get('/articles', async(req, res) => {
     try {
-        const allArticles = await pool.query('SELECT * FROM articles')
+        const allArticles = await pool.query('SELECT * FROM articles ORDER BY article_id DESC')
         res.json(allArticles.rows)
     } catch (error) {
         console.error(error.message)
