@@ -15,5 +15,5 @@ CREATE TABLE articles (
     date TEXT UNIQUE,
     likes INTEGER,
     dislikes INTEGER,
-    comments TEXT[]
+    comments JSON[]
 );
