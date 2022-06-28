@@ -65,11 +65,11 @@ app.put('/users/:id', async (req, res) => {
     }
 })
 
-// delete a user
+// delete a user by username
 app.delete('/users/:id', async (req, res) => {
     try {
         const {id} = req.params
-        const deletedUser = await pool.query('DELETE FROM useraccounts WHERE user_id = $1', [id])
+        const deletedUser = await pool.query('DELETE FROM useraccounts WHERE username = $1', [id])
         res.json('User was deleted')
     } catch (error) {
         console.error(error.message)
