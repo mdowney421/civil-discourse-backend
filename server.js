@@ -15,7 +15,7 @@ const API_KEY = process.env.API_KEY
 const newsapi = new NewsAPI(process.env.API_KEY)
 
 // MIDDLEWARE
-app.use(cors())
+app.use(cors({origin: "*"}))
 app.use(express.json())
 
 
