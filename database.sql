@@ -13,7 +13,7 @@ CREATE TABLE articles (
     image VARCHAR(500),
     url VARCHAR(500),
     date TEXT UNIQUE,
-    likes JSON[],
-    dislikes JSON[],
+    likes TEXT[],
+    dislikes TEXT[],
     comments JSON[]
 );
