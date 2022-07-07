@@ -10,8 +10,8 @@ Civil Discourse is a social media site with the intent of minimizing misinformat
 The app was built with a PERN stack and features user auth but does not have password encryption yet.
 
 ## How To Use
-Front end repository: https://github.com/mdowney421/civil-discourse-frontend
-Deployed application: https://civil-discourse-frontend.herokuapp.com/
+* Front end repository: https://github.com/mdowney421/civil-discourse-frontend
+* Deployed application: https://civil-discourse-frontend.herokuapp.com/
 
 ## Technologies Used
 * HTML
